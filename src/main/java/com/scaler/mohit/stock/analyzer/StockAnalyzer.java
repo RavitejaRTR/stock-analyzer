@@ -1,7 +1,13 @@
 package com.scaler.mohit.stock.analyzer;
 
 import com.scaler.mohit.stock.analyzer.pojo.AnnualizedReturn;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -10,13 +16,29 @@ import java.util.List;
  **/
 public class StockAnalyzer {
 
+    private static final String BASE_DIRECTORY = "src/main/resources/";
+
     /*
      *  TODO: Complete this method to read the file and return list of all stocks.
      *   @Param: Filename (placed in resources folder)
      *   @Returns: List of stocks present in the file
      */
     public static List<String> readStocksFromFile(String fileName) {
-        return Collections.emptyList();
+        JSONParser jsonParser = new JSONParser();
+        List<String> stocks = new ArrayList<>();
+        try {
+            FileReader fileReader =
+                    new FileReader(Thread.currentThread().getContextClassLoader().getResource(fileName).getFile());
+            List<JSONObject> jsonObjects = (List<JSONObject>) jsonParser.parse(fileReader);
+            for (JSONObject object : jsonObjects) {
+                stocks.add((String) object.get("symbol"));
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return stocks;
     }
 
     /*
