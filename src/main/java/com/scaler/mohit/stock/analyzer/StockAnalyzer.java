@@ -16,8 +16,6 @@ import java.util.List;
  **/
 public class StockAnalyzer {
 
-    private static final String BASE_DIRECTORY = "src/main/resources/";
-
     /*
      *  TODO: Complete this method to read the file and return list of all stocks.
      *   @Param: Filename (placed in resources folder)
